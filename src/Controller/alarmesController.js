@@ -12,11 +12,12 @@ async alarmesCelulose(request,response){
         }
     });
 
-    
-    const data = await bigquery.query('SELECT * FROM `sz-00022-ws.ALARMES_E_EVENTOS.ALARMES_CELULOSE` ORDER BY alci_cd_identificador DESC LIMIT 10000');
+    const {pagination} = request.body
+    const limit = 24
+    const data = await bigquery.query(`SELECT * FROM ${"`"}sz-00022-ws.ALARMES_E_EVENTOS.ALARMES_CELULOSE${"`"} ORDER BY alci_cd_identificador DESC LIMIT ${limit} OFFSET ${(pagination*limit)-limit}`);
 
     
-    return response.json(data[0])
+    return response.status(200).json(data[0])
 
 }
 

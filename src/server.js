@@ -7,8 +7,10 @@ const appError = require('./utils/app.Error')
 const routers = require('./routes/index')
 
 app.use(cors());
+
+app.use(express.json());
+
 app.use(routers);
-app.use(express.json({ limit: '10mb' }));
 
 app.use((error,request,response,next)=>{
     if(error instanceof appError){
