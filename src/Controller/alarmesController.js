@@ -14,7 +14,7 @@ async alarmesCelulose(request,response){
 
     const {pagination} = request.body
     const limit = 1000
-    const offset = pagination ===1? 1 : pagination*20
+    const offset = pagination ===1? 0 : pagination*20
     const data = await bigquery.query(`SELECT * FROM ${"`"}sz-00022-ws.ALARMES_E_EVENTOS.ALARMES_CELULOSE${"`"} ORDER BY alci_cd_identificador DESC LIMIT ${limit} OFFSET ${offset}`);
 
     
