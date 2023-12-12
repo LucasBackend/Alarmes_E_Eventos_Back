@@ -1,4 +1,5 @@
 require('express-async-errors');
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -26,7 +27,7 @@ app.use((error,request,response,next)=>{
     }
 })
 
-const PORT = 3333
+const PORT = process.env.PORT || 3333
 
 app.listen(PORT,()=>{
     console.log(`app ouvindo na porta ${PORT}`)
