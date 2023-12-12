@@ -22,7 +22,7 @@ async eventosCelulose(request,response){
     const {pagination} = request.body
     const limit = 1000
     const offset = pagination ===1? 0 : pagination*20
-    const data = await bigquery.query(`SELECT even_cd_identificador,even_ds_tag,even_tx_usuario_2,even_ds_tipo_alarme_1,even_tx_usuario_1,even_dt_evento,even_ds_area FROM ${"`"}sz-00022-ws.ALARMES_E_EVENTOS.EVENTOS_CELULOSE${"`"} WHERE LOWER(even_ds_area) LIKE LOWER("%${area}%") AND (even_dt_evento>="${dataInicioFormat}" AND even_dt_evento<="${dataFimFormat}") ORDER BY even_cd_identificador DESC LIMIT ${limit} OFFSET ${offset}`);
+    const data = await bigquery.query(`SELECT even_cd_identificador,even_ds_tag,even_tx_usuario_2,even_ds_tipo_alarme_1,even_tx_usuario_1,even_dt_evento,even_ds_area,even_ds_origem FROM ${"`"}sz-00022-ws.ALARMES_E_EVENTOS.EVENTOS_CELULOSE${"`"} WHERE LOWER(even_ds_area) LIKE LOWER("%${area}%") AND (even_dt_evento>="${dataInicioFormat}" AND even_dt_evento<="${dataFimFormat}") ORDER BY even_cd_identificador DESC LIMIT ${limit} OFFSET ${offset}`);
    
     
     return response.status(200).json(data[0])
@@ -48,7 +48,7 @@ async eventosUtilidades(request,response){
     const {pagination} = request.body
     const limit = 1000
     const offset = pagination ===1? 0 : pagination*20
-    const data = await bigquery.query(`SELECT even_cd_identificador,even_ds_tag,even_tx_usuario_2,even_ds_tipo_alarme_1,even_tx_usuario_1,even_dt_evento,even_ds_area FROM ${"`"}sz-00022-ws.ALARMES_E_EVENTOS.EVENTOS_UTILIDADES${"`"} WHERE LOWER(even_ds_area) LIKE LOWER("%${area}%") AND (even_dt_evento>="${dataInicioFormat}" AND even_dt_evento<="${dataFimFormat}") ORDER BY even_cd_identificador DESC LIMIT ${limit} OFFSET ${offset}`);
+    const data = await bigquery.query(`SELECT even_cd_identificador,even_ds_tag,even_tx_usuario_2,even_ds_tipo_alarme_1,even_tx_usuario_1,even_dt_evento,even_ds_area,even_ds_origem FROM ${"`"}sz-00022-ws.ALARMES_E_EVENTOS.EVENTOS_UTILIDADES${"`"} WHERE LOWER(even_ds_area) LIKE LOWER("%${area}%") AND (even_dt_evento>="${dataInicioFormat}" AND even_dt_evento<="${dataFimFormat}") ORDER BY even_cd_identificador DESC LIMIT ${limit} OFFSET ${offset}`);
    
     
     return response.status(200).json(data[0])
