@@ -13,17 +13,17 @@ async alarmesCelulose(request,response){
     });
 
     const {area} = request.body || ''
-    const {datainicio} = request.body
-    const {datafim} = request.body
+    const {datainicio,datafim,procsession,pagination} = request.body
     const dataInicioFormat = `${datainicio.replace('T',' ')}:00.000`
     const dataFimFormat = `${datafim.replace('T',' ')}:59.999`
-    
-    const {pagination} = request.body
     const limit = 1000
     const offset = pagination ===1? 0 : pagination*20
-    const data = await bigquery.query(`SELECT alci_cd_identificador,alci_ds_tag,alci_tx_usuario_2,alci_ds_tipo_alarme_1,alci_tx_usuario_1,alci_dt_alarme,alci_dt_final,alci_ds_area,alci_ds_sub_area_2 FROM ${"`"}sz-00022-ws.ALARMES_E_EVENTOS.ALARME_CICLO_CELULOSE${"`"} WHERE alci_ds_origem = "Process(MB300)" AND LOWER(alci_ds_area) LIKE LOWER("%${area}%") AND (alci_dt_alarme>="${dataInicioFormat}" AND alci_dt_alarme<="${dataFimFormat}") ORDER BY alci_cd_identificador DESC LIMIT ${limit} OFFSET ${offset}`);
+
+    console.log(procsession)
+
+    const data = await bigquery.query(`SELECT alci_cd_identificador,alci_ds_tag,alci_tx_usuario_2,alci_ds_tipo_alarme_1,alci_tx_usuario_1,alci_dt_alarme,alci_dt_final,alci_ds_area,alci_ds_sub_area_2 FROM ${"`"}sz-00022-ws.ALARMES_E_EVENTOS.ALARME_CICLO_CELULOSE${"`"} WHERE alci_ds_origem = "Process(MB300)" AND LOWER(alci_ds_area) LIKE LOWER("%${area}%") AND alci_ds_sub_area_2 LIKE "%${procsession}%" AND (alci_dt_alarme>="${dataInicioFormat}" AND alci_dt_alarme<="${dataFimFormat}") ORDER BY alci_cd_identificador DESC LIMIT ${limit} OFFSET ${offset}`);
    
-    
+    console.log(data)
     return response.status(200).json(data[0])
 
 }
